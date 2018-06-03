@@ -14,6 +14,7 @@ module.exports = {
         ...{ token: jwtService.createToken({ username, password }) }
       };
     } catch (e) {
+      console.log(e);
       ctx.status = 400;
       ctx.body = {
         message: "username/password missing or already exists"

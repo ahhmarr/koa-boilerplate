@@ -6,10 +6,9 @@ const publicRouter = new Router({
 const privateRouter = new Router({
   prefix: "/api"
 });
-privateRouter.use(middleware.jwtAuthMiddleware);
 const authService = require("../service/auth");
 module.exports = function(app) {
-  publicRouter.post("/users", authService.create);
+  privateRouter.post("/users", authService.create);
   publicRouter.post("/login", authService.login);
   publicRouter.get("/", async function(ctx) {
     ctx.body = { message: "Hello World!" };
@@ -25,6 +24,7 @@ module.exports = function(app) {
       message: "not found"
     };
   });
-  app.use(publicRouter.routes()).use(publicRouter.allowedMethods());
+  privateRouter.use(middleware.jwtAuthMiddleware);
   app.use(privateRouter.routes()).use(privateRouter.allowedMethods());
+  app.use(publicRouter.routes()).use(publicRouter.allowedMethods());
 };
