@@ -7,5 +7,5 @@ require("dotenv").config();
 app.use(BodyParser());
 app.use(logger());
 require("./app/routes")(app);
-
+console.log(`App listenng @ http://127.0.0.1:${process.env.PORT || 3000}`);
 app.listen(process.env.PORT || 3000);
