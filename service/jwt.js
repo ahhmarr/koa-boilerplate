@@ -8,7 +8,15 @@ module.exports = {
       console.log(ctx.request.header);
       const isValid = jwt.verify(token, process.env.SECRET || "");
       console.log(isValid);
-      next();
+      if(isValid){
+       return next();
+      } else {
+         ctx.body = {
+          message: "Invalid/Expired Token"
+        };
+        ctx.status = 401;        
+      }
+     
     } catch (e) {
       //   console.log(e);
       ctx.body = {
