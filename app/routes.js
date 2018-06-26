@@ -6,6 +6,7 @@ const publicRouter = new Router({
 const privateRouter = new Router({
   prefix: "/api"
 });
+privateRouter.use(middleware.jwtAuthMiddleware);
 const authService = require("../service/auth");
 module.exports = function(app) {
   privateRouter.post("/users", authService.create);
@@ -21,10 +22,9 @@ module.exports = function(app) {
   publicRouter.all("*", async ctx => {
     ctx.status = 404;
     ctx.body = {
-      message: "not found"
+      message: "route not found"
     };
   });
-  privateRouter.use(middleware.jwtAuthMiddleware);
   app.use(privateRouter.routes()).use(privateRouter.allowedMethods());
   app.use(publicRouter.routes()).use(publicRouter.allowedMethods());
 };
