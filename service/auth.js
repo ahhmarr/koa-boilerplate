@@ -1,6 +1,16 @@
 const User = require("../models/User");
 const jwtService = require("./jwt");
 module.exports = {
+  verify: async function({ username, password, iat }) {
+    return new Promise(async (resolve, reject) => {
+      let user = await User.findOne({ username, password });
+      if (!user) {
+        reject("invalid token");
+      } else {
+        resolve(user);
+      }
+    });
+  },
   create: async function(ctx) {
     const { username, password } = ctx.request.body;
     console.log(username, password);
@@ -29,7 +39,6 @@ module.exports = {
     let passwordCheck;
     if (user) {
       passwordCheck = await user.comparePassword(password);
-      console.log(passwordCheck);
       if (passwordCheck) {
         user = user.toObject();
         console.log(user);

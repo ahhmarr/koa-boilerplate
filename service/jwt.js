@@ -1,22 +1,25 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 module.exports = {
-  verify(ctx, next) {
+  async verify(ctx, next) {
     try {
       const token = ctx.request.header.authorization
         ? ctx.request.header.authorization.split(" ").pop()
         : "";
-      console.log(ctx.request.header);
-      const isValid = jwt.verify(token, process.env.SECRET || "");
-      console.log(isValid);
-      if(isValid){
-       return next();
+      const { username, password } = jwt.verify(
+        token,
+        process.env.SECRET || ""
+      ).data;
+      console.log(username, password);
+      const isValid = await User.findOne({ username, password });
+      if (isValid) {
+        return next();
       } else {
-         ctx.body = {
+        ctx.body = {
           message: "Invalid/Expired Token"
         };
-        ctx.status = 401;        
+        ctx.status = 401;
       }
-     
     } catch (e) {
       //   console.log(e);
       ctx.body = {
@@ -26,6 +29,14 @@ module.exports = {
     }
   },
   createToken(data) {
-    return jwt.sign(data, process.env.SECRET || "");
+    return jwt.sign(
+      {
+        data,
+        ...(process.env.TOKEN_EXPIRY
+          ? { exp: Math.floor(Date.now() / 1000) + ~~process.env.TOKEN_EXPIRY }
+          : {})
+      },
+      process.env.SECRET || ""
+    );
   }
 };
