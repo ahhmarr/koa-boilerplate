@@ -20,6 +20,7 @@
     "koa-jwt": "^3.3.2",
     "koa-logger": "^2.0.1",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "mongoose": "^5.1.3"
   }
 }
