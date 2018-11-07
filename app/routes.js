@@ -1,22 +1,18 @@
 const Router = require("koa-router");
+const d = require("../models/Player");
 const middleware = require("./middleware");
 const publicRouter = new Router({
-  prefix: "/api"
+  prefix: "/api/v1"
 });
 const privateRouter = new Router({
-  prefix: "/api"
+  prefix: "/api/v1"
 });
 privateRouter.use(middleware.jwtAuthMiddleware);
 const authService = require("../service/auth");
 module.exports = function(app) {
-  privateRouter.post("/users", authService.create);
-  publicRouter.post("/login", authService.login);
-  publicRouter.get("/", async function(ctx) {
-    ctx.body = { message: "Hello World!" };
-  });
-  privateRouter.get("/private/", async ctx => {
+  publicRouter.get("/hello", async ctx => {
     ctx.body = {
-      message: "private"
+      message: "hello world"
     };
   });
   publicRouter.all("*", async ctx => {
