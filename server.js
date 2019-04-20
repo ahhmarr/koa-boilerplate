@@ -2,7 +2,6 @@ const Koa = require("koa");
 const BodyParser = require("koa-bodyparser");
 const logger = require("koa-logger");
 const static = require("koa-static");
-const jwt = require("jsonwebtoken");
 const app = new Koa();
 require("dotenv").config();
 app.use(BodyParser());

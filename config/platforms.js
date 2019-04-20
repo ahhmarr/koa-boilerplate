@@ -1,1 +1,1 @@
-module.exports = [{ name: "howstat", url: "http://howstat.com" }];
+module.exports = [{ name: "howstat", url: "http://howstat.com", enable: true }];

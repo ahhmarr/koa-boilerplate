@@ -26,8 +26,8 @@ const batting = {
   "400"        : numReqDef,
   Ducks        : numReqDef,
   Pairs        : numReqDef,
-  "4"          : numReqDef,
-  "6"          : numReqDef,
+  "4s"         : numReqDef,
+  "6s"         : numReqDef,
   ballsFaced   : numReqDef,
   scoringRate  : numReqDef,
   openedBatting: numReqDef
@@ -39,11 +39,11 @@ const best = {
 const bowling = {
   overs       : numReqDef,
   balls       : numReqDef,
-  aggregate   : numReqDef,
   maidens     : numReqDef,
   runsConceded: numReqDef,
   wickets     : numReqDef,
   average     : numReqDef,
+  "4w"        : numReqDef,
   "5w"        : numReqDef,
   "10w"       : numReqDef,
   best        : {
